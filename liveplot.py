@@ -28,9 +28,11 @@ class livePlot():
 		self.line1.set_ydata(self.y)
 		self.fig.canvas.draw()
 
+'''
 lp = livePlot(100, 100)
 for i in range(100):
 	lp.update(i)
 
 for i in range(100):
 	lp.update(100-i)
+'''
