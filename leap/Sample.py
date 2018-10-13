@@ -6,9 +6,14 @@
 # between Leap Motion and you, your company or other organization.             #
 ################################################################################
 
+<<<<<<< HEAD
 import os, sys, inspect, thread, time
 import matplotlib.pyplot as plt
 
+=======
+import os, sys, inspect, time
+import _thread as thread
+>>>>>>> origin/master
 src_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
 print (src_dir)
 # Windows and Linux
