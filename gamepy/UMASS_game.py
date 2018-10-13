@@ -29,7 +29,7 @@ def main():
 	
 	# Velocity
 	velocityG = 0
-	AG = 15
+	AG = 7
 	
 	screen = pygame.display.set_mode((SIZE,900))
 	screen.blit(image,(imageX, imageY))
