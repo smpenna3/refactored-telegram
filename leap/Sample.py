@@ -6,7 +6,8 @@
 # between Leap Motion and you, your company or other organization.             #
 ################################################################################
 
-import os, sys, inspect, thread, time
+import os, sys, inspect, time
+import _thread as thread
 src_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
 print (src_dir)
 # Windows and Linux
