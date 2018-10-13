@@ -13,77 +13,44 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 #logger.addHandler(fh)
 
+SCREENSIZE = 300
+
+class Apple(pygame.sprite.Sprite):
+
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self, pygame.sprite.RenderUpdates())
+        self.x = x
+        self.y = y
+
+        self.image = pygame.image.load("apple.png")
+
+    def drawScreen(self, screen):
+        screen.blit(self.image, (self.x, self.y))
 
 def main():
-	pygame.init()
-	
-	image = pygame.image.load("apple.png")
-	pygame.display.set_caption("apple")
-	width = image.get_width()
-	height = image.get_height()
-	SIZE = 300
+    pygame.init()
+    screen = pygame.display.set_caption("apple")
+    screen = pygame.display.set_mode((SCREENSIZE, SCREENSIZE))
 
-	imageX = (SIZE - width)/2
-	imageY = (80)
-	angle = 0
-	
-	# Velocity
-	velocityG = 0
-	AG = 15
-	
-	screen = pygame.display.set_mode((SIZE,900))
-	screen.blit(image,(imageX, imageY))
-	pygame.display.flip()
-	
-	clock = pygame.time.Clock()
+    apple = Apple(100, 100)
 
-	while True:
-		for event in pygame.event.get():
-			if event.type == QUIT:
-				return 0
 
-		keystate = pygame.key.get_pressed()
+    clock = pygame.time.Clock()
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                return 0
 
-		if keystate[K_RIGHT]:
-			imageX += 10
-		elif keystate[K_LEFT]:
-			imageX -= 10
-		elif keystate[K_UP]:
-			velocityG = 0
-			imageY -= 100
-		elif keystate[K_DOWN]:
-			imageY += 10
-		elif keystate[K_r]:
-			angle += 10
-		elif keystate[K_l]:
-			angle -= 10
+        keystate = pygame.key.get_pressed()
 
-		screen.fill((0,0,0))
 
-		originalCenter = image.get_rect().center
-		rotatedImage = pygame.transform.rotate(image, angle)
-		rotatedImage.get_rect().center = originalCenter
+        apple.drawScreen(screen)
+        pygame.display.flip()
 
-		if imageX < 0:
-			imageX = 0
-		elif imageX > SIZE - width:
-			imageX = SIZE - width
-		if imageY < 0:
-			imageY = 0   
-		elif imageY > 880 - height:
-			imageY = 900 - height
-			velocityG = 0
-		else:
-			velocityG += AG
-			imageY += velocityG * (1/40)
+        clock.tick(40)
 
-		screen.blit(rotatedImage,(imageX, imageY))
-			
-		pygame.display.flip()
-		
-		logger.debug(velocityG)
-		
-		clock.tick(40)
-				
+    pygame.quit()
+
 if __name__=="__main__":
 	main()
