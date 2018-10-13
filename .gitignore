@@ -1,0 +1,5 @@
+## PYC
+*.pyc
+
+### Log
+*.log
