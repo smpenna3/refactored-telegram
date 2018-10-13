@@ -1,6 +1,17 @@
 import pygame
 from pygame.locals import *
-import time
+import time, logging
+
+# Setup logging
+formatter = logging.Formatter('%(asctime)s - [%(levelname)7s]. - %(message)s')
+logger = logging.getLogger('mainlog')
+logger.setLevel(logging.DEBUG)
+#fh = logging.handlers.RotatingFileHandler('log.log', maxBytes=5*1024*1024, backupCount=10)
+#fh.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+#logger.addHandler(fh)
 
 
 def main():
@@ -13,10 +24,14 @@ def main():
 	SIZE = 300
 
 	imageX = (SIZE - width)/2
-	imageY = (SIZE - height)/2
+	imageY = (80)
 	angle = 0
 	
-	screen = pygame.display.set_mode((SIZE,SIZE))
+	# Velocity
+	velocityG = 0
+	AG = 15
+	
+	screen = pygame.display.set_mode((SIZE,900))
 	screen.blit(image,(imageX, imageY))
 	pygame.display.flip()
 	
@@ -34,7 +49,8 @@ def main():
 		elif keystate[K_LEFT]:
 			imageX -= 10
 		elif keystate[K_UP]:
-			imageY -= 10
+			velocityG = 0
+			imageY -= 100
 		elif keystate[K_DOWN]:
 			imageY += 10
 		elif keystate[K_r]:
@@ -50,18 +66,22 @@ def main():
 
 		if imageX < 0:
 			imageX = 0
-		if imageX > SIZE - width:
+		elif imageX > SIZE - width:
 			imageX = SIZE - width
 		if imageY < 0:
 			imageY = 0   
-		if imageY > SIZE - height:
-			imageY = SIZE - height
+		elif imageY > 880 - height:
+			imageY = 900 - height
+			velocityG = 0
+		else:
+			velocityG += AG
+			imageY += velocityG * (1/40)
 
 		screen.blit(rotatedImage,(imageX, imageY))
 			
 		pygame.display.flip()
 		
-		imageY += 1
+		logger.debug(velocityG)
 		
 		clock.tick(40)
 				
