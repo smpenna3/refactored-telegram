@@ -7,6 +7,8 @@
 ################################################################################
 
 import os, sys, inspect, thread, time
+import matplotlib.pyplot as plt
+
 src_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
 print (src_dir)
 # Windows and Linux
@@ -177,3 +179,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    plt.show()

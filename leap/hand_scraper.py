@@ -7,14 +7,16 @@ arch_dir = '../lib/x64' if sys.maxsize > 2**32 else '../lib/x86'
 
 sys.path.insert(0, os.path.abspath(os.path.join(src_dir, arch_dir)))
 import Leap
+import pygame
 
 from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture
 
+
 class SampleListener(Leap.Listener):
+    pygame.init()
     finger_names = ['Thumb', 'Index', 'Middle', 'Ring', 'Pinky']
     bone_names = ['Metacarpal', 'Proximal', 'Intermediate', 'Distal']
     state_names = ['STATE_INVALID', 'STATE_START', 'STATE_UPDATE', 'STATE_END']
-
     def on_init(self, controller):
         print("Initialized")
         controller.enable_gesture(Leap.Gesture.TYPE_CIRCLE)
@@ -32,15 +34,16 @@ class SampleListener(Leap.Listener):
     def on_exit(self, controller):
         print  ("All doneeeeeeeee...")
 
+    def send_commands(self, frame):
+        
+
     def on_frame(self, controller):
         frame = controller.frame()
-
-        #Hand Section
+        #Get Hands
         for hand in frame.hands:
-            #do something to graph hands
-            pass
-            arm = hand.arm
-
+            print (hand.palm_position)
+        send_commands(frame)
+            
         # Get gestures
         for gesture in frame.gestures():
             if gesture.type == Leap.Gesture.TYPE_CIRCLE:
@@ -79,6 +82,8 @@ class SampleListener(Leap.Listener):
                 print ("  Screen Tap id: %d, %s, position: %s, direction: %s" % (
                         gesture.id, self.state_names[gesture.state],
                         screentap.position, screentap.direction ))
+
+    
                 
     def state_string(self, state):
         if state == Leap.Gesture.STATE_START:
@@ -95,13 +100,14 @@ class SampleListener(Leap.Listener):
 
 
 def main():
+    
     # Create a sample listener and controller
     listener = SampleListener()
     controller = Leap.Controller()
+    
 
     # Have the sample listener receive events from the controller
     controller.add_listener(listener)
-
     # Keep this process running until Enter is pressed
     print ("Press Enter to quit...")
     try:
