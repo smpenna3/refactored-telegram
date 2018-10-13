@@ -1,5 +1,17 @@
 import pygame
 from pygame.locals import *
+import time, logging
+
+# Setup logging
+formatter = logging.Formatter('%(asctime)s - [%(levelname)7s]. - %(message)s')
+logger = logging.getLogger('mainlog')
+logger.setLevel(logging.DEBUG)
+#fh = logging.handlers.RotatingFileHandler('log.log', maxBytes=5*1024*1024, backupCount=10)
+#fh.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+#logger.addHandler(fh)
 
 SCREENSIZE = 300
 
@@ -40,6 +52,5 @@ def main():
 
     pygame.quit()
 
-
 if __name__=="__main__":
-    main()
+	main()
