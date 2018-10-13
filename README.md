@@ -5,3 +5,5 @@ HI
 BYE
 
 test
+
+<a href="google.com">Google</a>
